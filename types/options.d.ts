@@ -71,11 +71,34 @@ export interface ComponentOptions<
   Computed=DefaultComputed,
   PropsDef=PropsDefinition<DefaultProps>,
   Props=DefaultProps> {
+  // ---------------------------------- 选项 / 数据 ----------------------------------
+  /**
+   * Vue 实例的数据对象
+   * Vue 将会递归将 data 的属性转换为 getter/setter，从而让 data 的属性能够响应数据变化
+   * vm.$data === data
+   */
   data?: Data;
+  /**
+   * props 可以是数组或对象，用于接收来自父组件的数据
+   */
   props?: PropsDef;
+  /**
+   * 创建实例时传递 props
+   * 主要作用是方便测试
+   */
   propsData?: object;
+  /**
+   * 计算属性
+   */
   computed?: Accessors<Computed>;
+  /**
+   * methods 将被混入到 Vue 实例中
+   * 直接通过 VM 实例访问这些方法
+   */
   methods?: Methods;
+  /**
+   * 监控值变化，并执行回调函数
+   */
   watch?: Record<string, WatchOptionsWithHandler<any> | WatchHandler<any> | string>;
 
   el?: Element | string;
