@@ -12,7 +12,7 @@ import {
   ThisTypedComponentOptionsWithRecordProps,
   WatchOptions,
 } from "./options";
-import { VNode, VNodeData, VNodeChildren, ScopedSlot } from "./vnode";
+import { VNode, VNodeData, VNodeChildren, NormalizedScopedSlot } from "./vnode";
 import { PluginFunction, PluginObject } from "./plugin";
 
 export interface CreateElement {
@@ -55,7 +55,7 @@ export interface Vue {
   /**
    * 渲染函数向子组件中传递作用域插槽，用来访问作用域插槽
    */
-  readonly $scopedSlots: { [key: string]: ScopedSlot | undefined };
+  readonly $scopedSlots: { [key: string]: NormalizedScopedSlot | undefined };
   /**
    * 当前 Vue 实例是否运行于服务器，用作服务器端渲染
    * Nuxt.js 为开发服务端渲染的 Vue 应用提供了极其便利的开发体验
@@ -288,7 +288,7 @@ export interface VueConstructor<V extends Vue = Vue> {
    * @param callback 更新DOM后执行的回调函数
    * @param context DOM对象
    */
-  nextTick(callback: () => void, context?: any[]): void;
+  nextTick<T>(callback: (this: T) => void, context?: T): void;
 
   /**
    * 支持 Promise 操作
@@ -422,6 +422,7 @@ export interface VueConstructor<V extends Vue = Vue> {
    * vue 实例全局配置
    */
   config: VueConfiguration;
+  version: string;
 }
 
 export const Vue: VueConstructor;
